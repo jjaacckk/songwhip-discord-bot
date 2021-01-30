@@ -77,7 +77,7 @@ async def on_message(message):
                                  url="https://songwhip.com/" + songwhip_JSON["artists"][0]["url"], 
                                  icon_url=songwhip_JSON["artists"][0]["image"])
                 embed.set_thumbnail(url=songwhip_JSON["image"])
-                embed.set_footer(text="powered by SongWhip")
+#                embed.set_footer(text="powered by SongWhip")
 
                 
             await message.reply(embed=embed)
