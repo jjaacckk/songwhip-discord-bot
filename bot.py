@@ -69,7 +69,10 @@ async def on_message(message):
                                     url=songwhip_JSON["url"], 
                                     description=songwhip_JSON["type"].title() + " · " + str(release_time.date().year), 
                                     color=0xff0088)
-                embed.add_field(name="About Artist:", value=description, inline=False)
+                
+                # uncomment this line if you want artist descriptions for each link (looks good on desktop, but not great on mobile fyi)
+                # embed.add_field(name="About Artist:", value=description, inline=False)
+                
                 embed.set_author(name=songwhip_JSON["artists"][0]["name"], 
                                  url="https://songwhip.com/" + songwhip_JSON["artists"][0]["url"], 
                                  icon_url=songwhip_JSON["artists"][0]["image"])
