@@ -3,7 +3,7 @@
 # github.com/jjaacckk
 
 
-import discord, requests
+import discord, requests, colors
 from re import findall
 from os import getenv
 from dotenv import load_dotenv
@@ -37,7 +37,6 @@ async def on_message(message):
     # checks for match on each new message
     matches = contains_music_link(message.content) 
     
-    reply_message = []
     
     # if there are multiple matches (multiple song links in the same message) it will loop through each match
     for m in matches:
@@ -46,32 +45,38 @@ async def on_message(message):
         
         #if successfull, replies to original message with the SongWhip URL in an embed
         if songwhip_JSON != False:
+            try:
+                color = discord.Colour.from_rgb(*colors.get_brightest_color(requests.get(songwhip_JSON["image"], stream=True).raw))
+            except FileNotFoundError:
+                color = 0xffffff
             
             if songwhip_JSON["type"] == "artist":
                 description = songwhip_JSON["description"] 
-                if len(description) > 300:
-                    description = description[:300] + "...."
+                if description:
+                    if len(description) > 300:
+                        description = description[:300] + "...."
                 
                 embed=discord.Embed(title=songwhip_JSON["name"], 
                                     url=songwhip_JSON["url"], 
                                     description=description, 
-                                    color=0xff0088)
+                                    color=color)
                 embed.set_thumbnail(url=songwhip_JSON["image"])
-                embed.set_footer(text="powered by SongWhip")
+#                embed.set_footer(text="powered by SongWhip")
                 
             else:
                 release_time = datetime.strptime(songwhip_JSON["releaseDate"], '%Y-%m-%dT%H:%M:%S.%fZ')
-                description = songwhip_JSON["artists"][0]["description"] 
-                if len(description) > 300:
-                    description = description[:300] + "...."
                                     
                 embed=discord.Embed(title= songwhip_JSON["name"], 
                                     url=songwhip_JSON["url"], 
                                     description=songwhip_JSON["type"].title() + " · " + str(release_time.date().year), 
-                                    color=0xff0088)
+                                    color=color)
                 
-                # uncomment this line if you want artist descriptions for each link (looks good on desktop, but not great on mobile fyi)
-                # embed.add_field(name="About Artist:", value=description, inline=False)
+                # uncomment these lines below if you want artist descriptions for each link (looks good on desktop, but not great on mobile fyi)
+#                description = songwhip_JSON["artists"][0]["description"] 
+#                if description:
+#                    if len(description) > 300:
+#                        description = description[:300] + "...."
+#                embed.add_field(name="About Artist:", value=description, inline=False)
                 
                 embed.set_author(name=songwhip_JSON["artists"][0]["name"], 
                                  url="https://songwhip.com/" + songwhip_JSON["artists"][0]["url"], 
