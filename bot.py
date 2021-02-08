@@ -23,7 +23,7 @@ def songwhip(url):
 
 def contains_music_link(message):
     # attemps to match each message with the RegEx pattern
-    pat = "(?:http:\/\/|https:\/\/)?(?:[a-z0-9]*[\-\.])*(?:apple|spotify|youtube|bandcamp|tidal|pandora|napster|yandex|amazon|deezer|jiosaavn|audius|gaana|soundcloud|page)\.(?:com|co|link)(?:\/[^ |\n|\t|\"|\']*)+"
+    pat = "(?:http:\/\/|https:\/\/)?(?:[a-z0-9]*[\-\.])*(?:apple|spotify|youtube|youtu|bandcamp|tidal|pandora|napster|yandex|amazon|deezer|jiosaavn|audius|gaana|soundcloud|page)\.(?:com|co|link|be)(?:\/[^ |\n|\t|\"|\']*)+"
     matches = findall(pat, message)
     return matches
     
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 # spotify.com
 # music.apple.com
 # youtube.com
-# music.youtube.com
+# music.youtube.com / youtu.be
 # bandcamp.com
 # tidal.com
 # pandora.com
