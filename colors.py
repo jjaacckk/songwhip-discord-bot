@@ -5,7 +5,7 @@ import argparse
 import sys
 
 
-def get_colors(image_file, numcolors=10, resize=150):
+def get_colors(image_file, numcolors=3, resize=150):
     # Resize image to speed up processing
     img = Image.open(image_file)
     img = img.copy()
